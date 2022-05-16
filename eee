@@ -2,21 +2,26 @@
 
 ## echo $1
 MYvar="$1"
+MYDATE="$(date +%Y-%m_%b-%d)"
 
 if [ "$1" = "a" ]  
 then MYami="ami-020d764f9372da231"
 elif [ "$1" = "aa" ]
-then MYami="ami-0a58e22c727337c51"
+then MYami="ami-0c6120f461d6b39e9"
 elif [ "$1" = "c" ]
 then MYami="ami-5b778339"
 elif [ "$1" = "r" ]
 then MYami="ami-0810abbfb78d37cdf"
+elif [ "$1" = "r7" ]
+then MYami="ami-01448715c06d2edb5"
 elif [ "$1" = "u16" ]
 then MYami="ami-0e4bc04bd401729d6"
 elif [ "$1" = "u18" ]
 then MYami="ami-0bc49f9283d686bab"
 elif [ "$1" = "u20" ]
 then MYami="ami-0e6449745600ac1da"
+elif [ "$1" = "u22" ]
+then MYami="ami-018cbe789206ef46f"
 else
     MYami="ami-0bc49f9283d686bab"
     MYvar="u18"
@@ -24,4 +29,4 @@ fi
 
 ## echo "ResourceType=instance,Tags=[{Key=userName,Value=$1}]"
 
-aws ec2 run-instances --image-id $MYami --count 1 --instance-type t3a.2xlarge --key-name ec2key-201907 --security-group-ids "sg-0b877954e0945740d" --subnet-id "subnet-24070d43" --query Instances[].InstanceId  --output=text --tag-specifications "ResourceType=instance,Tags=[{Key=userName,Value=$MYvar}]"
+aws ec2 run-instances --image-id $MYami --count 1 --instance-type t3a.2xlarge --key-name isengard-201907 --security-group-ids "sg-0b877954e0945740d" --subnet-id "subnet-24070d43" --query Instances[].InstanceId  --output=text --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=$MYDATE},{Key=userName,Value=$MYvar}]"
